@@ -73,7 +73,7 @@ namespace stan {
         // Nesterov Dual-Averaging of log(epsilon)
         const double eta = 1.0 / (counter_ + t0_);
 
-        s_bar_ = (1.0 - eta) * s_bar_ + eta * (delta_ - adapt_stat);
+        s_bar_ = (1.0 - eta) * s_bar_ + eta * std::min(delta_ - adapt_stat, 1.0 - delta_);
 
         const double x = mu_ - s_bar_ * std::sqrt(counter_) / gamma_;
         const double x_eta = std::pow(counter_, - kappa_);
